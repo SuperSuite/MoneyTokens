@@ -1,6 +1,7 @@
 package com.github.mlgpenguin.moneytokens
 
 import com.github.mlgpenguin.moneytokens.items.CashNote
+import com.github.mlgpenguin.moneytokens.items.CoinVault
 import com.github.mlgpenguin.moneytokens.items.MoneyToken
 import com.github.supergluelib.foundation.extensions.format
 import com.github.supergluelib.foundation.extensions.giveOrDropItem
@@ -9,6 +10,7 @@ import com.github.supergluelib.hooks.Hooks
 import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
 import revxrsal.commands.annotation.Command
+import revxrsal.commands.annotation.Range
 import revxrsal.commands.annotation.Suggest
 import revxrsal.commands.bukkit.annotation.CommandPermission
 
@@ -30,6 +32,13 @@ class Commands {
             sender.giveOrDropItem(CashNote(amount, sender.name).getItem())
             sender.send("&7Withdrawn &a$${amount.format()}")
         } else sender.send("&7You do not have enough money")
+    }
+
+    @Command("coinvault give", "cv give")
+    @CommandPermission("moneytokens.admin.give")
+    fun coinvaultGiveCmd(sender: CommandSender, target: Player, @Suggest("1", "2", "3", "4", "5") @Range(min = 1.0, max = 5.0) level: Int) {
+        target.giveOrDropItem(CoinVault(level).getItem())
+        sender.send("&&Gave &a${target.name} a level $level Coin Vault")
     }
 
 }
