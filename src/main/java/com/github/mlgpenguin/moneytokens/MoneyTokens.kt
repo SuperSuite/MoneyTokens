@@ -11,10 +11,13 @@ import org.bukkit.plugin.java.JavaPlugin
 class MoneyTokens: JavaPlugin() {
 
     override fun onEnable() {
-        Foundations
-            .setup(this)
+        Foundations.setup(this)
             .registerItems(MoneyToken(1), CashNote(1, ""), CoinVault(1))
             .registerCommands(Commands())
+    }
+
+    override fun onDisable() {
+        Foundations.onDisable()
     }
 
 }

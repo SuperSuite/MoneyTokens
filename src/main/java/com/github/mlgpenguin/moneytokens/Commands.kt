@@ -38,7 +38,7 @@ class Commands {
     @CommandPermission("moneytokens.admin.give")
     fun coinvaultGiveCmd(sender: CommandSender, target: Player, @Suggest("1", "2", "3", "4", "5") @Range(min = 1.0, max = 5.0) level: Int) {
         target.giveOrDropItem(CoinVault(level).getItem())
-        sender.send("&&Gave &a${target.name} a level $level Coin Vault")
+        sender.send("&7Gave &a${target.name}&7 a level &a$level&7 Coin Vault")
     }
 
 }

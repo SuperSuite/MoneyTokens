@@ -4,9 +4,11 @@ import com.github.supergluelib.customitem.CustomItem
 import com.github.supergluelib.foundation.Runnables
 import com.github.supergluelib.foundation.extensions.format
 import com.github.supergluelib.foundation.extensions.send
+import com.github.supergluelib.foundation.extensions.toColor
 import com.github.supergluelib.foundation.util.ItemBuilder
 import com.github.supergluelib.hooks.Hooks
 import org.bukkit.Material
+import org.bukkit.Sound
 import org.bukkit.entity.Player
 import org.bukkit.event.player.PlayerInteractEvent
 import org.bukkit.inventory.ItemStack
@@ -62,13 +64,14 @@ class CoinVault(val tier: Int): CustomItem() {
 
         var executions = 0
         var amount = 0
-        Runnables.runTimerWithClass(6, 0) {
+        Runnables.runTimerWithClass(4, 0) {
             amount = range.random()
-            player.sendTitle("$prefix${amount.format()}", "", 0, 60, 10)
+            player.sendTitle("$prefix${amount.format()}".toColor(), "", 0, 60, 10)
 
-            if (executions++ >= 10) { // Finished
+            if (executions++ >= 12) { // Finished
                 it.cancel()
                 eco.deposit(player, amount)
+                player.playSound(player.location, Sound.BLOCK_NOTE_BLOCK_BELL, 1f, 1f)
                 player.send("&7Received &a${amount.format()}");
                 inAnimation.remove(player.uniqueId);
             }
