@@ -9,6 +9,7 @@ import com.github.supergluelib.hooks.Hooks
 import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
 import revxrsal.commands.annotation.Command
+import revxrsal.commands.annotation.Suggest
 import revxrsal.commands.bukkit.annotation.CommandPermission
 
 class Commands {
@@ -17,14 +18,14 @@ class Commands {
 
     @Command("moneytoken give", "mt give")
     @CommandPermission("moneytokens.admin.give")
-    fun moneytokenGiveCommand(sender: CommandSender, target: Player, amount: Int) {
+    fun moneytokenGiveCommand(sender: CommandSender, target: Player, @Suggest("10") amount: Int) {
         target.giveOrDropItem(MoneyToken(amount).getItem())
         sender.send("&7Gave &a${target.name}&7 a Money Token worth &a$${amount.format()}")
     }
 
     @Command("withdraw")
     @CommandPermission("moneytokens.withdraw")
-    fun withdrawCmd(sender: Player, amount: Int) {
+    fun withdrawCmd(sender: Player, @Suggest("10") amount: Int) {
         if (eco.withdrawIfPossible(sender, amount)) {
             sender.giveOrDropItem(CashNote(amount, sender.name).getItem())
             sender.send("&7Withdrawn &a$${amount.format()}")
