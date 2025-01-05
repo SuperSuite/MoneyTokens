@@ -1,8 +1,9 @@
 name: '${project_name}'
 author: SuperPenguin
 version: '${version}'
-main: com.github.mlgpenguin.plugintemplate.PluginTemplate
+main: com.github.mlgpenguin.moneytokens.MoneyTokens
 api-version: '1.20'
-description: A Kotlin Plugin Template!
+description: Very LightWeight plugin allows creating Redeemable Money Tokens
+softdepend: [Vault]
 libraries:
   - "org.jetbrains.kotlin:kotlin-stdlib:1.9.0"

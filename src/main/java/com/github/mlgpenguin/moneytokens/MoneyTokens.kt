@@ -1,8 +1,8 @@
-package com.github.mlgpenguin.plugintemplate
+package com.github.mlgpenguin.moneytokens
 
 import org.bukkit.plugin.java.JavaPlugin
 
-class PluginTemplate: JavaPlugin() {
+class MoneyTokens: JavaPlugin() {
 
     override fun onEnable() {
 
