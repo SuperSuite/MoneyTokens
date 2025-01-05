@@ -11,11 +11,14 @@ repositories {
     mavenCentral()
     maven("https://hub.spigotmc.org/nexus/content/repositories/snapshots/")
     maven("https://www.jitpack.io")
+
+    mavenLocal()
 }
 
 dependencies {
     compileOnly("org.spigotmc:spigot-api:1.20.4-R0.1-SNAPSHOT")
-    implementation("com.github.SuperGlueLib:SuperGlue:1.1.2")
+//    implementation("com.github.SuperGlueLib:SuperGlue:1.1.2")
+    implementation("com.github.supergluelib:SuperGlue:1.2.1")
 }
 
 kotlin {
