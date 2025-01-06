@@ -33,7 +33,7 @@ class CoinVault(val tier: Int): CustomItem() {
         item: ItemStack,
         meta: ItemMeta,
         id: String?
-    ) = id!!.startsWith("coinvault:")
+    ) = id?.startsWith("coinvault:") == true
 
     companion object {
         private val inAnimation: HashSet<UUID> = hashSetOf()

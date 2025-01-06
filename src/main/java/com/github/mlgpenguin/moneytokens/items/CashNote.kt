@@ -15,7 +15,7 @@ import org.bukkit.inventory.meta.ItemMeta
 class CashNote(val amount: Int, val withdrawnBy: String): CustomItem() {
 
     override fun fromItemStack(item: ItemStack, meta: ItemMeta, id: String?) = id!!.split(":").let { CashNote(it[1].toInt(), it[2]) }
-    override fun isItem(item: ItemStack, meta: ItemMeta, id: String?) = id!!.startsWith("cashnote:")
+    override fun isItem(item: ItemStack, meta: ItemMeta, id: String?) = id?.startsWith("cashnote:") == true
     override fun getItem() = ItemBuilder(Material.PAPER, "&aCash Note")
         .addLore("&7Worth: &a$$amount", "&7Withdrawn By: &a$withdrawnBy", "", "&7Right-Click to redeem")
         .identifier("cashnote:$amount:$withdrawnBy")
