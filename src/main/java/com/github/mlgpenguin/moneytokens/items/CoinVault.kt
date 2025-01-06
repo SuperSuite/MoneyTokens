@@ -72,7 +72,7 @@ class CoinVault(val tier: Int): CustomItem() {
                 it.cancel()
                 eco.deposit(player, amount)
                 player.playSound(player.location, Sound.BLOCK_NOTE_BLOCK_BELL, 1f, 1f)
-                player.send("&7Received &a${amount.format()}");
+                player.send("&7Received &a$${amount.format()}");
                 inAnimation.remove(player.uniqueId);
             }
         }
