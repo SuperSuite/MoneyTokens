@@ -20,17 +20,12 @@ import revxrsal.commands.node.ExecutionContext
 class Commands(val plugin: MoneyTokens) {
 
     private val eco = Hooks.economy ?: throw NullPointerException("Economy provider cannot be found, all operations will fail!")
-    var vaultRanges: Map<Int, IntRange> = getRanges()
-
-    private fun getRanges() = plugin.config.getConfigurationSection("coinvault-levels")?.getKeys(false)?.associate {
-        it.toInt() to plugin.config.getInt("coinvault-levels.$it.min", 0)..plugin.config.getInt("coinvault-levels.$it.max", 0)
-    } ?: mapOf()
 
     @Command("monkeytoken reload", "mt reload")
     @CommandPermission("moneytokens.admin.reload")
-    fun reloadMoneyTokens() {
+    fun reloadMoneyTokens(sender: CommandSender) {
         plugin.reloadConfig()
-        vaultRanges = getRanges()
+        sender.send("&7Reloaded the MoneyToken config.")
     }
 
     @Command("moneytoken give", "mt give")
@@ -52,14 +47,16 @@ class Commands(val plugin: MoneyTokens) {
     @Command("coinvault give", "cv give")
     @CommandPermission("moneytokens.admin.give")
     fun coinvaultGiveCmd(sender: CommandSender, target: Player, @SuggestWith(CoinVaultProvider::class) level: Int) {
-        if (level !in vaultRanges.keys) return sender.send("&c$level is not a valid CoinVault. Valid levels are: [${vaultRanges.keys.joinToString()}]")
+        if (level !in plugin.coinvaultRanges.keys)
+            return sender.send("&c$level is not a valid CoinVault. Valid levels are: [${plugin.coinvaultRanges.keys.joinToString()}]")
+
         target.giveOrDropItem(CoinVault(level).getItem())
         sender.send("&7Gave &a${target.name}&7 a level &a$level&7 Coin Vault")
     }
 
-    inner class CoinVaultProvider: SuggestionProvider<BukkitCommandActor> {
+    class CoinVaultProvider(): SuggestionProvider<BukkitCommandActor> {
         override fun getSuggestions(ex: ExecutionContext<BukkitCommandActor?>): Collection<String?> {
-            return vaultRanges.keys.map(Int::toString)
+            return MoneyTokens.instance.coinvaultRanges.keys.map(Int::toString)
         }
     }
 
