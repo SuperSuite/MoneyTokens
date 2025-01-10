@@ -13,7 +13,9 @@ class MoneyTokens: JavaPlugin() {
     override fun onEnable() {
         Foundations.setup(this)
             .registerItems(MoneyToken(1), CashNote(1, ""), CoinVault(1))
-            .registerCommands(Commands())
+            .registerCommands(Commands(this))
+
+        saveDefaultConfig()
     }
 
     override fun onDisable() {

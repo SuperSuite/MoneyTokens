@@ -10,13 +10,28 @@ import com.github.supergluelib.hooks.Hooks
 import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
 import revxrsal.commands.annotation.Command
-import revxrsal.commands.annotation.Range
 import revxrsal.commands.annotation.Suggest
+import revxrsal.commands.annotation.SuggestWith
+import revxrsal.commands.autocomplete.SuggestionProvider
+import revxrsal.commands.bukkit.actor.BukkitCommandActor
 import revxrsal.commands.bukkit.annotation.CommandPermission
+import revxrsal.commands.node.ExecutionContext
 
-class Commands {
+class Commands(val plugin: MoneyTokens) {
 
     private val eco = Hooks.economy ?: throw NullPointerException("Economy provider cannot be found, all operations will fail!")
+    var vaultRanges: Map<Int, IntRange> = getRanges()
+
+    private fun getRanges() = plugin.config.getConfigurationSection("coinvault-levels")?.getKeys(false)?.associate {
+        it.toInt() to plugin.config.getInt("coinvault-levels.$it.min", 0)..plugin.config.getInt("coinvault-levels.$it.max", 0)
+    } ?: mapOf()
+
+    @Command("monkeytoken reload", "mt reload")
+    @CommandPermission("moneytokens.admin.reload")
+    fun reloadMoneyTokens() {
+        plugin.reloadConfig()
+        vaultRanges = getRanges()
+    }
 
     @Command("moneytoken give", "mt give")
     @CommandPermission("moneytokens.admin.give")
@@ -36,9 +51,16 @@ class Commands {
 
     @Command("coinvault give", "cv give")
     @CommandPermission("moneytokens.admin.give")
-    fun coinvaultGiveCmd(sender: CommandSender, target: Player, @Suggest("1", "2", "3", "4", "5") @Range(min = 1.0, max = 5.0) level: Int) {
+    fun coinvaultGiveCmd(sender: CommandSender, target: Player, @SuggestWith(CoinVaultProvider::class) level: Int) {
+        if (level !in vaultRanges.keys) return sender.send("&c$level is not a valid CoinVault. Valid levels are: [${vaultRanges.keys.joinToString()}]")
         target.giveOrDropItem(CoinVault(level).getItem())
         sender.send("&7Gave &a${target.name}&7 a level &a$level&7 Coin Vault")
+    }
+
+    inner class CoinVaultProvider: SuggestionProvider<BukkitCommandActor> {
+        override fun getSuggestions(ex: ExecutionContext<BukkitCommandActor?>): Collection<String?> {
+            return vaultRanges.keys.map(Int::toString)
+        }
     }
 
 }
