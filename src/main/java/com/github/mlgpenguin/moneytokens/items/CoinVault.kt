@@ -1,5 +1,6 @@
 package com.github.mlgpenguin.moneytokens.items
 
+import com.github.mlgpenguin.moneytokens.MoneyTokens
 import com.github.supergluelib.customitem.CustomItem
 import com.github.supergluelib.foundation.Runnables
 import com.github.supergluelib.foundation.extensions.format
@@ -26,7 +27,6 @@ class CoinVault(val tier: Int): CustomItem() {
     override fun getItem(): ItemStack = ItemBuilder(Material.JUKEBOX, "&a&nCoin Vault&7 (Tier $tier)")
         .addLore("&7Right-Click to Redeem")
         .identifier("coinvault:$tier")
-        .apply { if (tier > 4) glowing(true) }
         .build()
 
     override fun isItem(
@@ -38,13 +38,7 @@ class CoinVault(val tier: Int): CustomItem() {
     companion object {
         private val inAnimation: HashSet<UUID> = hashSetOf()
 
-        private val ranges = mapOf<Int, IntRange>(
-            1 to 25_000..100_000,
-            2 to 100_000..500_000,
-            3 to 500_000..2_500_000,
-            4 to 2_500_000..10_000_000,
-            5 to 10_000_000..50_000_000,
-        )
+        private val ranges get() = MoneyTokens.instance.coinvaultRanges
     }
 
     private operator fun IntRange.times(multiplier: Int): IntRange = (start * multiplier)..(endInclusive * multiplier)
