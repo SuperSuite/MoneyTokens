@@ -4,8 +4,11 @@ import com.github.mlgpenguin.moneytokens.items.CashNote
 import com.github.mlgpenguin.moneytokens.items.CoinVault
 import com.github.mlgpenguin.moneytokens.items.MoneyToken
 import com.github.supergluelib.command.LampManager.registerCommands
+import com.github.supergluelib.command.LampManager.setupCommands
 import com.github.supergluelib.customitem.SuperItems.registerItems
 import com.github.supergluelib.foundation.Foundations
+import org.bukkit.Bukkit
+import org.bukkit.entity.Player
 import org.bukkit.plugin.java.JavaPlugin
 
 class MoneyTokens: JavaPlugin() {
@@ -23,6 +26,11 @@ class MoneyTokens: JavaPlugin() {
 
         Foundations.setup(this)
             .registerItems(MoneyToken(1), CashNote(1, ""), CoinVault(1))
+            .setupCommands {
+                it.suggestionProviders { providers ->
+                    providers.addProvider(Player::class.java) { _ -> Bukkit.getOnlinePlayers().map { it.name } }
+                }
+            }
             .registerCommands(Commands(this))
 
         saveDefaultConfig()
