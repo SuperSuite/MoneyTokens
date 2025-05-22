@@ -1,7 +1,14 @@
+coinvault-name: "&a&nCoin Vault&7 (Tier %tier%)"
 coinvault-levels:
   1:
+    coinvault-name: "&a&nCoin Vault&7 (Tier %tier%)"
     min: 25_000
     max: 100_000
+    max-commands: 1
+    commands:
+      1:
+        command: give %player% diamond 1
+        chance: 50
   2:
     min: 100_000
     max: 500_000

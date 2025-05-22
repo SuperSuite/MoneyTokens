@@ -18,11 +18,13 @@ class MoneyTokens: JavaPlugin() {
             private set
     }
 
-    lateinit var coinvaultRanges: Map<Int, IntRange>
-        private set
+    lateinit var coinVaultConfig: CoinVaultConfig private set
 
     override fun onEnable() {
         instance = this
+
+        saveDefaultConfig()
+        loadConfigs()
 
         Foundations.setup(this)
             .registerItems(MoneyToken(1), CashNote(1, ""), CoinVault(1))
@@ -33,9 +35,6 @@ class MoneyTokens: JavaPlugin() {
             }
             .registerCommands(Commands(this))
 
-        saveDefaultConfig()
-
-        coinvaultRanges = getRanges()
     }
 
     override fun onDisable() {
@@ -44,11 +43,26 @@ class MoneyTokens: JavaPlugin() {
 
     override fun reloadConfig() {
         super.reloadConfig()
-        coinvaultRanges = getRanges()
+        loadConfigs()
     }
 
-    private fun getRanges() = config.getConfigurationSection("coinvault-levels")?.getKeys(false)?.associate {
-        it.toInt() to config.getInt("coinvault-levels.$it.min", 0)..config.getInt("coinvault-levels.$it.max", 0)
-    } ?: mapOf()
+    private fun loadConfigs() {
+        val levels = config.getConfigurationSection("coinvault-levels")?.getKeys(false)?.associate {
+            it.toInt() to CoinVaultLevel(
+                config.getInt("coinvault-levels.$it.min", 0)..config.getInt("coinvault-levels.$it.max", 0),
+                config.getString("coinvault-levels.$it.coinvault-name", null),
+                config.getInt("coinvault-levels.$it.max-commands", 1),
+                config.getConfigurationSection("coinvault-levels.$it.commands")?.getKeys(false)?.map { cmd ->
+                    val path = "coinvault-levels.$it.commands.$cmd"
+                    CoinVaultCommand(config.getString("$path.command", "")!!, config.getDouble("$path.chance", 100.0))
+                }?.filter { it.cmd.isNotEmpty() } ?: listOf()
+            )
+        } ?: mapOf()
+
+        coinVaultConfig = CoinVaultConfig(
+            config.getString("coinvault-name", "&a&nCoin Vault&7 (Tier %tier%)")!!,
+            levels
+        )
+    }
 
 }

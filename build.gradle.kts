@@ -5,7 +5,7 @@ plugins {
 }
 
 group = "com.github.mlgpenguin"
-version = "1.0.0"
+version = "1.1.0"
 
 repositories {
     mavenCentral()
@@ -17,7 +17,6 @@ repositories {
 
 dependencies {
     compileOnly("org.spigotmc:spigot-api:1.20.4-R0.1-SNAPSHOT")
-//    implementation("com.github.SuperGlueLib:SuperGlue:1.1.2")
     implementation("com.github.supergluelib:SuperGlue:1.2.2")
 }
 

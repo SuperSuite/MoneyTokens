@@ -47,8 +47,9 @@ class Commands(val plugin: MoneyTokens) {
     @Command("coinvault give", "cv give")
     @CommandPermission("moneytokens.admin.give")
     fun coinvaultGiveCmd(sender: CommandSender, target: Player, @SuggestWith(CoinVaultProvider::class) level: Int) {
-        if (level !in plugin.coinvaultRanges.keys)
-            return sender.send("&c$level is not a valid CoinVault. Valid levels are: [${plugin.coinvaultRanges.keys.joinToString()}]")
+        val cvConfig = plugin.coinVaultConfig
+        if (level !in cvConfig.coinVaultLevels.keys)
+            return sender.send("&c$level is not a valid CoinVault. Valid levels are: [${cvConfig.coinVaultLevels.keys.joinToString()}]")
 
         target.giveOrDropItem(CoinVault(level).getItem())
         sender.send("&7Gave &a${target.name}&7 a level &a$level&7 Coin Vault")
@@ -56,7 +57,8 @@ class Commands(val plugin: MoneyTokens) {
 
     class CoinVaultProvider(): SuggestionProvider<BukkitCommandActor> {
         override fun getSuggestions(ex: ExecutionContext<BukkitCommandActor?>): Collection<String?> {
-            return MoneyTokens.instance.coinvaultRanges.keys.map(Int::toString)
+            return MoneyTokens.instance.coinVaultConfig.coinVaultLevels
+                .keys.map(Int::toString)
         }
     }
 
