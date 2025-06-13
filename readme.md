@@ -2,13 +2,13 @@
 SuperMoneyTokens is a plugin that allows you to give out redeemable money, integrating with almost all economy plugins automatically.
 
 ### Money is given out in three ways:
-- A simple token: right click to redeem <br>
+1. A simple token: right click to redeem <br>
 <img src="https://cdn.modrinth.com/data/cached_images/fd2d369c7309e4c01992bab9a871ea98c8bc127d.png">
 
-- A Player-generated bank note with /withdraw <br>
+2. A Player-generated bank note with /withdraw <br>
 <img src="https://cdn.modrinth.com/data/cached_images/4583377d9a3ad57933f756aef246984ddb06c0dd.png">
 
-- A Coin Vault which contains a random amount of money and plays an animation <br>
+3. A Coin Vault which contains a random amount of money and plays an animation <br>
 <img src="https://cdn.modrinth.com/data/cached_images/e15fb0ab4eda2b035b6df6eb0ed67600f153c830.gif">
 
 # Commands and Permissions
