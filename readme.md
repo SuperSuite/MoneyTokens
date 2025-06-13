@@ -23,5 +23,47 @@ SuperMoneyTokens is a plugin that allows you to give out redeemable money, integ
 **/coinvault** (/cv) give <player> <tier> - moneytokens.admin.give
 <br>Give a player a coin vault containing random amounts of money
 
+
+# Configuration
+The plugin can be configured using the `config.yml` file that will be located in your plugins/SuperMoneyTokens folder. This file allows you to customize various aspects of the money tokens and coin vaults, such as names, lore, and tier and level-specific settings.
+
+<details>
+<summary>Example config.yml</summary>
+
+```yaml
+coinvault-name: "&a&nCoin Vault&7 (Tier %tier%)"
+coinvault-levels:
+  1:
+    # All of these settings are optional except for 'min' and 'max'
+    coinvault-name: "&a&nCoin Vault&7 (Tier %tier%)"
+    min: 25_000
+    max: 100_000
+    max-commands: 1
+    # You can add as many commands as you like, 
+    # or remove the section entirely to ignore them.
+    commands:
+      1:
+        command: give %player% diamond 1
+        chance: 50
+  2:
+    min: 100_000
+    max: 500_000
+  3:
+    min: 500_000
+    max: 2_500_000
+  4:
+    min: 2_500_000
+    max: 10_000_000
+  5:
+    min: 10_000_000
+    max: 50_000_000
+
+money-token:
+  # %amount% is a placeholder for the value of the token; (1,000)
+  name: "&a$%amount%"
+  lore: ["&7Right-Click to redeem &a$%amount%"]
+```
+</details>
+
 # Bugs and Suggestions
 If you require support or would like to make a suggestion for the plugin, please join the [Discord](https://discord.gg/cAtj5Ue2mC) where support will be provided.
