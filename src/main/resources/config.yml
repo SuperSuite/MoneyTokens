@@ -21,3 +21,7 @@ coinvault-levels:
   5:
     min: 10_000_000
     max: 50_000_000
+
+money-token:
+  name: "&a$%amount%"
+  lore: ["&7Right-Click to redeem &a$%amount%"]

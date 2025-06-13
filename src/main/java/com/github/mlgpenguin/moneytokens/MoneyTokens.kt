@@ -59,9 +59,14 @@ class MoneyTokens: JavaPlugin() {
             )
         } ?: mapOf()
 
+        val mtc = config.getConfigurationSection("money-token")?.let { sec ->
+            MoneyTokenConfig(sec.getString("name", "&a$%amount%")!!, sec.getStringList("lore"))
+        } ?: MoneyTokenConfig("&a$%amount%", listOf("&7Right-Click to redeem &a$%amount%"))
+
         coinVaultConfig = CoinVaultConfig(
             config.getString("coinvault-name", "&a&nCoin Vault&7 (Tier %tier%)")!!,
-            levels
+            levels,
+            mtc
         )
     }
 
