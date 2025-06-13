@@ -13,16 +13,15 @@ SuperMoneyTokens is a plugin that allows you to give out redeemable money, integ
 
 # Commands and Permissions
 ### Players:
-**/withdraw** <amount> - moneytokens.withdraw 
-<br>Players can withdraw a bank note from their balance.
+- **/withdraw** <amount> - moneytokens.withdraw
+  <br> Players can withdraw a bank note from their balance.
 
 ### Admins:
-**/moneytoken** (/mt) give <player> <money> - moneytokens.admin.give
-<br>Give a player a redeemable money token.
-
-**/coinvault** (/cv) give <player> <tier> - moneytokens.admin.give
-<br>Give a player a coin vault containing random amounts of money
-
+- **/moneytoken** (/mt) give <player> <money> - moneytokens.admin.give
+  <br> Give a player a redeemable money token.
+<br><br>
+- **/coinvault** (/cv) give <player> <tier> - moneytokens.admin.give
+  <br>  Give a player a coin vault containing random amounts of money
 
 # Configuration
 The plugin can be configured using the `config.yml` file that will be located in your plugins/SuperMoneyTokens folder. This file allows you to customize various aspects of the money tokens and coin vaults, such as names, lore, and tier and level-specific settings.
